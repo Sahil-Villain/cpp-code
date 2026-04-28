@@ -1,0 +1,21 @@
+# Binaries
+*.exe
+*.out
+*.o
+*.obj
+merge_sort
+quick_sort
+binary_search
+n_queens
+rat_in_maze
+sudoku_solver
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
