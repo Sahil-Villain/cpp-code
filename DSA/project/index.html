@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ShopEase – Your Everything Store</title>
+  <meta name="description" content="Professional Amazon‑style ecommerce template: responsive header with search, category nav, hero carousel, product grid, deals row, and footer."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23222'/%3E%3Ctext x='50' y='62' font-size='54' text-anchor='middle' fill='white' font-family='Arial, Helvetica, sans-serif'%3ES%3C/text%3E%3C/svg%3E"/>
+  <style>
+    :root{
+      --bg:#0f1111;           /* header bg */
+      --bg-sub:#232f3e;        /* subnav bg */
+      --panel:#131921;         /* header panel */
+      --text:#f5f6f6;          /* light text */
+      --muted:#d5d8d6;         /* muted text */
+      --accent:#ffd814;        /* brand accent */
+      --accent-2:#f08804;      /* secondary accent */
+      --card:#ffffff;          /* card bg */
+      --ink:#0f1111;           /* body text */
+      --border:#e5e7eb;        /* subtle border */
+      --chip:#eff1f3;          /* chip bg */
+      --success:#16a34a;       /* success */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--ink); background:#fafafa;
+    }
+
+    /* ===== Top Announcement Bar ===== */
+    .topbar{
+      background:var(--panel); color:var(--text); padding:.5rem 1rem; display:flex; align-items:center; gap:.75rem; justify-content:space-between;
+    }
+    .topbar .deliver{display:flex; align-items:center; gap:.5rem; opacity:.9}
+    .topbar .deliver svg{width:16px;height:16px;opacity:.8}
+    .topbar a{color:var(--text); text-decoration:none}
+
+    /* ===== Header ===== */
+    header{background:var(--bg); color:var(--text)}
+    .header-main{display:grid; grid-template-columns: 190px 1fr 520px 1fr 120px; gap:12px; align-items:center; padding:10px 16px;}
+    @media (max-width:1200px){.header-main{grid-template-columns: 160px 1fr 500px 120px;}}
+    @media (max-width:992px){.header-main{grid-template-columns: 140px 1fr 56px 80px;}}
+
+    .logo{display:flex; align-items:center; gap:.5rem; text-decoration:none; color:var(--text)}
+    .logo svg{width:36px;height:36px}
+    .logo strong{font-size:1.25rem}
+
+    /* Search */
+    .search{display:flex; align-items:stretch; border-radius:8px; overflow:hidden; background:#fff;}
+    .search select{border:none; padding:.75rem .75rem; background:#f6f7f8}
+    .search input{flex:1; border:none; padding:.75rem .85rem; min-width:120px}
+    .search button{border:none; padding:.75rem .9rem; background:var(--accent-2); color:#fff; cursor:pointer}
+    .search button:hover{filter:brightness(.95)}
+
+    /* Account / Orders / Cart */
+    .header-links{display:flex; align-items:center; gap:14px; justify-content:flex-end}
+    .link{display:flex; flex-direction:column; gap:2px; color:var(--text); text-decoration:none}
+    .link small{color:var(--muted)}
+
+    .cart{position:relative; display:flex; align-items:center; gap:.35rem; color:var(--text); text-decoration:none}
+    .cart svg{width:28px;height:28px}
+    .cart .count{position:absolute; top:-6px; right:-10px; background:var(--accent); color:#111; border-radius:999px; font-weight:700; font-size:.75rem; padding:2px 6px;}
+
+    /* ===== Sub Navigation ===== */
+    .subnav{background:var(--bg-sub); color:var(--text); display:flex; align-items:center; gap:10px; padding:8px 16px;}
+    .hamburger{display:flex; align-items:center; gap:.5rem; cursor:pointer}
+    .hamburger svg{width:20px;height:20px}
+    .nav-chips{display:flex; gap:8px; overflow:auto; scrollbar-width:none}
+    .chip{white-space:nowrap; background:transparent; padding:6px 10px; border-radius:999px; border:1px solid transparent; color:var(--text); cursor:pointer}
+    .chip:hover{background:#2f3e52}
+
+    /* ===== Hero Carousel ===== */
+    .hero{position:relative; height:360px; background:#ddd; overflow:hidden}
+    .slides{display:flex; height:100%; transition:transform .6s ease}
+    .slide{min-width:100%; height:100%; background-size:cover; background-position:center}
+    .hero .dots{position:absolute; left:50%; bottom:14px; transform:translateX(-50%); display:flex; gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%; background:#fff7; border:1px solid #fff9; cursor:pointer}
+    .dot.active{background:#fff}
+
+    /* ===== Page Container ===== */
+    .container{max-width:1400px; margin:0 auto; padding:16px}
+
+    /* ===== Deals Row (horizontal cards) ===== */
+    .row-title{display:flex; align-items:center; justify-content:space-between; margin:8px 0 10px}
+    .row-title h2{margin:0; font-size:1.25rem}
+    .row-scroll{display:flex; gap:12px; overflow:auto; padding-bottom:6px; scroll-snap-type:x mandatory}
+    .deal-card{flex:0 0 260px; scroll-snap-align:start; background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden}
+    .deal-card img{width:100%; height:150px; object-fit:cover}
+    .deal-card .p{padding:10px}
+    .badge{display:inline-block; padding:2px 8px; background:var(--success); color:#fff; font-weight:700; border-radius:6px; font-size:.75rem}
+
+    /* ===== Product Grid ===== */
+    .grid{display:grid; gap:16px; grid-template-columns: repeat(4, 1fr)}
+    @media (max-width:1200px){.grid{grid-template-columns: repeat(3, 1fr)}}
+    @media (max-width:900px){.grid{grid-template-columns: repeat(2, 1fr)}}
+    @media (max-width:600px){.grid{grid-template-columns: 1fr}}
+
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; display:flex; flex-direction:column; overflow:hidden}
+    .thumb{position:relative; padding-top:66%; background:#f2f3f5}
+    .thumb img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+    .content{padding:12px}
+    .title{font-weight:600; font-size:1rem; margin:0 0 4px; min-height:2.6em}
+    .rating{display:flex; align-items:center; gap:6px; color:#824; font-size:.85rem}
+    .price{display:flex; align-items:baseline; gap:6px; margin:8px 0}
+    .price b{font-size:1.15rem}
+    .strike{color:#6b7280; text-decoration:line-through}
+    .cta{display:flex; gap:8px}
+    .btn{flex:1; border:1px solid #d1d5db; border-radius:999px; padding:8px 10px; background:#fff; cursor:pointer}
+    .btn.primary{background:var(--accent); border-color:#f5c200}
+
+    /* ===== Footer ===== */
+    footer{margin-top:40px; background:#111; color:#ddd}
+    .footer-top{display:grid; grid-template-columns:repeat(5,1fr); gap:20px; padding:28px 16px; max-width:1400px; margin:0 auto}
+    .footer-top h4{margin:0 0 10px}
+    .footer-top a{display:block; color:#ddd; text-decoration:none; padding:4px 0; opacity:.9}
+    .footer-bottom{border-top:1px solid #222; padding:16px; text-align:center; color:#aaa}
+    @media (max-width:900px){.footer-top{grid-template-columns:repeat(2,1fr)}}
+
+    /* ===== Utility ===== */
+    .hidden{display:none}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+
+    /* ===== Mobile ===== */
+    @media (max-width:992px){
+      .search{grid-column: 1/-1}
+      .header-links .link{display:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Topbar ===== -->
+  <div class="topbar" role="region" aria-label="Delivery & deals">
+    <div class="deliver" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 7h11a1 1 0 0 1 1 1v7h2.5a2.5 2.5 0 1 1-2.45 2H8.95a2.5 2.5 0 1 1-4.9 0H3V8a1 1 0 0 1 1-1Zm13 2H4v7h.05a2.5 2.5 0 0 1 4.9 0H16V9Zm3 5-1.382-3.454A1 1 0 0 0 16.7 10H16v4h3Z"/></svg>
+      Deliver to <strong>&nbsp;India</strong>
+    </div>
+    <div>
+      <a href="#">Today's Deals</a>
+    </div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="header-main" role="navigation" aria-label="Primary">
+      <a class="logo" href="#" aria-label="ShopEase Home">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="10" width="56" height="44" rx="10" fill="white"/><path d="M8 18h48v8H8z" fill="#ffd814"/><path d="M12 34h28v6H12z" fill="#f08804"/></svg>
+        <strong>ShopEase</strong>
+      </a>
+
+      <!-- Search -->
+      <form class="search" role="search" aria-label="Sitewide" onsubmit="return onSearch(event)">
+        <label for="cat" class="sr-only">Category</label>
+        <select id="cat" aria-label="Category">
+          <option>All</option>
+          <option>Electronics</option>
+          <option>Fashion</option>
+          <option>Home</option>
+          <option>Beauty</option>
+          <option>Books</option>
+        </select>
+        <label for="q" class="sr-only">Search</label>
+        <input id="q" type="search" placeholder="Search ShopEase.in" required />
+        <button aria-label="Search">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff" aria-hidden="true"><path d="M10 2a8 8 0 105.293 14.707l4 4 1.414-1.414-4-4A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/></svg>
+        </button>
+      </form>
+
+      <!-- Spacer for big screens -->
+      <div class="hidden"></div>
+
+      <!-- Account / Orders -->
+      <div class="header-links">
+        <a class="link" href="#">
+          <small>Hello, sign in</small>
+          <strong>Account & Lists</strong>
+        </a>
+        <a class="link" href="#">
+          <small>Returns</small>
+          <strong>& Orders</strong>
+        </a>
+        <a class="cart" href="#" aria-label="Cart" onclick="openCart(event)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4h-2l-1 2H1v2h2l3.6 7.59-1.35 2.45A2 2 0 0 0 7 21h12v-2H7.42a.25.25 0 0 1-.22-.37L8.1 16h7.45a2 2 0 0 0 1.8-1.11L21 7H6.42l-.94-2ZM7 22a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+          <span class="count" id="cartCount">0</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Subnav -->
+    <div class="subnav" role="navigation" aria-label="Categories">
+      <div class="hamburger" onclick="toggleDrawer()" aria-label="Open menu" role="button">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+        All
+      </div>
+      <div class="nav-chips">
+        <button class="chip">Mobiles</button>
+        <button class="chip">Fashion</button>
+        <button class="chip">Home & Kitchen</button>
+        <button class="chip">Beauty</button>
+        <button class="chip">Books</button>
+        <button class="chip">Appliances</button>
+        <button class="chip">Toys</button>
+        <button class="chip">Sports</button>
+        <button class="chip">Grocery</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" aria-label="Featured promotions">
+    <div class="slides" id="slides">
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1520975922203-b39c3a50b2a7?q=80&w=1600&auto=format&fit=crop');"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1515165562835-c3b8c1a9d1ec?q=80&w=1600&auto=format&fit=crop');"></div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?q=80&w=1600&auto=format&fit=crop');"></div>
+    </div>
+    <div class="dots" id="dots" role="tablist" aria-label="Hero slides"></div>
+  </section>
+
+  <main class="container">
+    <!-- ===== Deals Row ===== -->
+    <div class="row-title">
+      <h2>Today’s Top Deals</h2>
+      <a href="#">View all</a>
+    </div>
+    <div class="row-scroll" id="dealsRow"></div>
+
+    <!-- ===== Product Grid ===== -->
+    <h2 style="margin:18px 0 12px">Best Sellers</h2>
+    <div class="grid" id="productGrid"></div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <h4>Get to Know Us</h4>
+        <a href="#">About ShopEase</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Sustainability</a>
+      </div>
+      <div>
+        <h4>Connect with Us</h4>
+        <a href="#">Facebook</a>
+        <a href="#">Twitter / X</a>
+        <a href="#">Instagram</a>
+        <a href="#">YouTube</a>
+      </div>
+      <div>
+        <h4>Make Money with Us</h4>
+        <a href="#">Sell on ShopEase</a>
+        <a href="#">Advertise</a>
+        <a href="#">Affiliate Program</a>
+        <a href="#">Fulfilment by ShopEase</a>
+      </div>
+      <div>
+        <h4>Let Us Help You</h4>
+        <a href="#">Your Account</a>
+        <a href="#">Returns Centre</a>
+        <a href="#">100% Purchase Protection</a>
+        <a href="#">Help</a>
+      </div>
+      <div>
+        <h4>Download App</h4>
+        <a href="#">iOS</a>
+        <a href="#">Android</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="yr"></span> ShopEase. Built with ♥ for demo purposes.</div>
+  </footer>
+
+  <!-- ===== Mini Cart Drawer (demo) ===== -->
+  <dialog id="cartDrawer" style="border:none; border-radius:16px; padding:0; width:min(540px, 95%);">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-bottom:1px solid var(--border)">
+      <strong>Cart</strong>
+      <button onclick="closeCart()" class="btn" style="border:none; background:#f3f4f6">✕</button>
+    </div>
+    <div id="cartItems" style="max-height:50vh; overflow:auto"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-top:1px solid var(--border)">
+      <div>
+        <div style="font-weight:700">Total: ₹<span id="cartTotal">0</span></div>
+        <small style="color:#6b7280">Shipping & taxes calculated at checkout</small>
+      </div>
+      <button class="btn primary" onclick="alert('Demo checkout')">Proceed to Buy</button>
+    </div>
+  </dialog>
+
+  <script>
+    const state = { cart: [], products: [], deals: [] };
+
+    // ===== Utilities =====
+    const fmtINR = n => new Intl.NumberFormat('en-IN').format(n);
+
+    function onSearch(e){
+      e.preventDefault();
+      const q = document.getElementById('q').value.trim();
+      if(!q) return false;
+      alert('Search for: '+q+' (demo)');
+      return false;
+    }
+
+    // ===== Hero Carousel =====
+    const slidesEl = document.getElementById('slides');
+    const dotsEl = document.getElementById('dots');
+    let idx = 0, total = slidesEl.children.length, timer;
+    function renderDots(){
+      dotsEl.innerHTML = '';
+      for(let i=0;i<total;i++){
+        const d = document.createElement('button');
+        d.className = 'dot'+(i===idx?' active':'');
+        d.setAttribute('aria-label','Go to slide '+(i+1));
+        d.onclick = ()=>{ idx=i; updateSlide(); };
+        dotsEl.appendChild(d);
+      }
+    }
+    function updateSlide(){
+      slidesEl.style.transform = `translateX(-${idx*100}%)`;
+      [...dotsEl.children].forEach((d,i)=>d.classList.toggle('active', i===idx));
+    }
+    function startHero(){
+      renderDots(); updateSlide();
+      clearInterval(timer);
+      timer = setInterval(()=>{ idx = (idx+1)%total; updateSlide(); }, 4500);
+    }
+
+    // ===== Demo Data =====
+    const demoProducts = [
+      {id:1, title:'Wireless Headphones with ANC, 40H Battery', price:2499, mrp:4999, rating:4.4, img:'https://images.unsplash.com/photo-1518444028785-8f9e2e6b4d18?q=80&w=1200&auto=format&fit=crop'},
+      {id:2, title:'Smartwatch with AMOLED Display & GPS', price:3499, mrp:6999, rating:4.2, img:'https://images.unsplash.com/photo-1511732351157-1865efcb7b7b?q=80&w=1200&auto=format&fit=crop'},
+      {id:3, title:'Cotton Regular Fit T‑Shirt (Pack of 2)', price:799, mrp:1499, rating:4.1, img:'https://images.unsplash.com/photo-1520975867597-0af37a22e31c?q=80&w=1200&auto=format&fit=crop'},
+      {id:4, title:'Stainless Steel Water Bottle – 1L', price:599, mrp:999, rating:4.6, img:'https://images.unsplash.com/photo-1543168256-418811576931?q=80&w=1200&auto=format&fit=crop'},
+      {id:5, title:'Bluetooth Speaker – Deep Bass Edition', price:1799, mrp:3299, rating:4.3, img:'https://images.unsplash.com/photo-1519677100203-a0e668c92439?q=80&w=1200&auto=format&fit=crop'},
+      {id:6, title:'Running Shoes for Men', price:2599, mrp:4999, rating:4.0, img:'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1200&auto=format&fit=crop'},
+      {id:7, title:'Pressure Cooker 5L – ISI Certified', price:1899, mrp:2999, rating:4.5, img:'https://images.unsplash.com/photo-1593720216276-0caa6452e004?q=80&w=1200&auto=format&fit=crop'},
+      {id:8, title:'Gaming Keyboard – Mechanical RGB', price:2999, mrp:5499, rating:4.2, img:'https://images.unsplash.com/photo-1595225467183-42981a1c98ea?q=80&w=1200&auto=format&fit=crop'},
+      {id:9, title:'Ceramic Dinner Set – 18 Pieces', price:3499, mrp:5799, rating:4.1, img:'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1200&auto=format&fit=crop'},
+      {id:10,title:'Backpack 30L – Water Resistant', price:1299, mrp:2499, rating:4.0, img:'https://images.unsplash.com/photo-1520975693411-b39c3a50b2a7?q=80&w=1200&auto=format&fit=crop'},
+      {id:11,title:'Face Serum with Vitamin C – 30ml', price:499, mrp:999, rating:4.2, img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop'},
+      {id:12,title:'Bestselling Novel Paperback', price:299, mrp:599, rating:4.7, img:'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop'}
+    ];
+
+    const demoDeals = [
+      {title:'Up to 60% off | Audio', off:'60% off', img:'https://images.unsplash.com/photo-1518444028785-8f9e2e6b4d18?q=80&w=1200&auto=format&fit=crop'},
+      {title:'Great Indian Fashion Sale', off:'50% off', img:'https://images.unsplash.com/photo-1520975867597-0af37a22e31c?q=80&w=1200&auto=format&fit=crop'},
+      {title:'Home Essentials Bonanza', off:'45% off', img:'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1200&auto=format&fit=crop'},
+      {title:'Gaming Week', off:'40% off', img:'https://images.unsplash.com/photo-1595225467183-42981a1c98ea?q=80&w=1200&auto=format&fit=crop'},
+      {title:'Beauty & Personal Care', off:'55% off', img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop'}
+    ];
+
+    // ===== Renderers =====
+    function renderDeals(){
+      const wrap = document.getElementById('dealsRow');
+      wrap.innerHTML = '';
+      state.deals.forEach(d=>{
+        const el = document.createElement('article');
+        el.className = 'deal-card';
+        el.innerHTML = `
+          <img alt="${d.title}" src="${d.img}" loading="lazy"/>
+          <div class="p">
+            <span class="badge">${d.off}</span>
+            <div style="margin-top:6px; font-weight:600">${d.title}</div>
+          </div>`;
+        wrap.appendChild(el);
+      });
+    }
+
+    function starSVG(){
+      return `<svg viewBox='0 0 24 24' width='16' height='16' fill='currentColor' aria-hidden='true'><path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/></svg>`
+    }
+
+    function renderProducts(){
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+      state.products.forEach(p=>{
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.innerHTML = `
+          <div class='thumb'><img alt='${p.title}' src='${p.img}' loading='lazy'></div>
+          <div class='content'>
+            <h3 class='title'>${p.title}</h3>
+            <div class='rating'>${starSVG()} <span>${p.rating}</span></div>
+            <div class='price'><b>₹${fmtINR(p.price)}</b> <span class='strike'>₹${fmtINR(p.mrp)}</span></div>
+            <div class='cta'>
+              <button class='btn' onclick='viewProduct(${p.id})'>View</button>
+              <button class='btn primary' onclick='addToCart(${p.id})'>Add to Cart</button>
+            </div>
+          </div>`;
+        grid.appendChild(el);
+      });
+    }
+
+    // ===== Cart Logic =====
+    function addToCart(id){
+      const p = state.products.find(x=>x.id===id);
+      const line = state.cart.find(x=>x.id===id);
+      if(line) line.qty++; else state.cart.push({...p, qty:1});
+      document.getElementById('cartCount').innerText = state.cart.reduce((s,i)=>s+i.qty,0);
+      toast('Added to cart');
+      renderCart();
+    }
+    function renderCart(){
+      const list = document.getElementById('cartItems');
+      list.innerHTML = '';
+      let total = 0;
+      state.cart.forEach(item=>{
+        total += item.price*item.qty;
+        const row = document.createElement('div');
+        row.style.display='grid';
+        row.style.gridTemplateColumns='80px 1fr auto';
+        row.style.gap='12px';
+        row.style.padding='12px 16px';
+        row.innerHTML = `
+          <img src='${item.img}' alt='' style='width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--border)'/>
+          <div>
+            <div style='font-weight:600'>${item.title}</div>
+            <div style='margin-top:6px'>Qty: 
+              <button class='btn' onclick='decQty(${item.id})' aria-label='Decrease quantity'>-</button>
+              <b>${item.qty}</b>
+              <button class='btn' onclick='incQty(${item.id})' aria-label='Increase quantity'>+</button>
+            </div>
+          </div>
+          <div style='font-weight:700'>₹${fmtINR(item.price*item.qty)}</div>`;
+        list.appendChild(row);
+      });
+      document.getElementById('cartTotal').innerText = fmtINR(total);
+    }
+    function incQty(id){ const it = state.cart.find(x=>x.id===id); if(it){it.qty++; renderCart(); document.getElementById('cartCount').innerText = state.cart.reduce((s,i)=>s+i.qty,0);} }
+    function decQty(id){ const i = state.cart.findIndex(x=>x.id===id); if(i>-1){ if(state.cart[i].qty>1) state.cart[i].qty--; else state.cart.splice(i,1); renderCart(); document.getElementById('cartCount').innerText = state.cart.reduce((s,it)=>s+it.qty,0);} }
+
+    // ===== Drawer & Toast =====
+    function openCart(e){ e && e.preventDefault(); document.getElementById('cartDrawer').showModal(); }
+    function closeCart(){ document.getElementById('cartDrawer').close(); }
+    function toggleDrawer(){ alert('Side menu (demo)'); }
+
+    function toast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.position='fixed'; t.style.bottom='20px'; t.style.left='50%'; t.style.transform='translateX(-50%)';
+      t.style.background='#111'; t.style.color='#fff'; t.style.padding='10px 14px'; t.style.borderRadius='999px'; t.style.boxShadow='0 6px 20px rgba(0,0,0,.2)';
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.remove(); }, 1200);
+    }
+
+    // ===== Product View (demo) =====
+    function viewProduct(id){
+      const p = state.products.find(x=>x.id===id);
+      if(!p) return;
+      alert(`${p.title}\n\nPrice: ₹${fmtINR(p.price)}\nMRP: ₹${fmtINR(p.mrp)}\nRating: ${p.rating}`);
+    }
+
+    // ===== Init =====
+    function init(){
+      state.products = demoProducts;
+      state.deals = demoDeals;
+      renderDeals();
+      renderProducts();
+      startHero();
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    }
+
+    init();
+  </script>
+</body>
+</html>
