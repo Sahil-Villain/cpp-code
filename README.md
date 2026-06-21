@@ -53,36 +53,11 @@ A **comprehensive collection of C++ implementations** covering all major algorit
 ```
 Cpp-Algorithms/
 │
-├── 📁 Sorting/
-│   ├── bubble_sort.cpp
-│   ├── merge_sort.cpp
-│   ├── quick_sort.cpp
-│   └── heap_sort.cpp
+├── 📁 DSA/               → 140+ C++ practice problems & implementations (Basic, Array, Linked List, Stack, Queue, Trees, Sorting, String, Graph...)
 │
-├── 📁 Searching/
-│   ├── binary_search.cpp
-│   └── two_pointer.cpp
+├── 📁 algorithms/        → Core algorithm implementations (backtracking, math, recursion, searching, sorting)
 │
-├── 📁 Trees/
-│   ├── BST.cpp
-│   ├── segment_tree.cpp
-│   └── trie.cpp
-│
-├── 📁 Graphs/
-│   ├── BFS.cpp
-│   ├── DFS.cpp
-│   ├── dijkstra.cpp
-│   └── union_find.cpp
-│
-├── 📁 DynamicProgramming/
-│   ├── knapsack.cpp
-│   ├── LCS.cpp
-│   └── LIS.cpp
-│
-├── 📁 Backtracking/
-├── 📁 Greedy/
-├── 📁 Math/
-└── 📄 README.md
+└── 📁 data_structures/   → Standard data structures (arrays, graphs, heaps, linked_lists, trees)
 ```
 
 ---
