@@ -49,5 +49,6 @@ int main(){
     obj.push(5);
     obj.push(7);
     obj.show();
+    obj.show();
     return 0;
 }
